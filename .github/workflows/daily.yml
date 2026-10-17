@@ -1,0 +1,23 @@
+name: อัปเดตดวงรายวัน
+on:
+  schedule:
+    - cron: "5 17 * * *"   # 00:05 น. เวลาไทย
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  daily:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python3 tools/build_daily.py
+      - name: Commit
+        run: |
+          git config user.name "duangjai-bot"
+          git config user.email "duangjai-bot@users.noreply.github.com"
+          git add daily sitemap.xml
+          git diff --cached --quiet || git commit -m "ดวงรายวัน $(TZ=Asia/Bangkok date +%Y-%m-%d)"
+          git push

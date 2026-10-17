@@ -99,4 +99,12 @@
 <url><loc>https://duangjai.site/number/97</loc></url>
 <url><loc>https://duangjai.site/number/98</loc></url>
 <url><loc>https://duangjai.site/number/99</loc></url>
+<url><loc>https://duangjai.site/daily/</loc><changefreq>daily</changefreq></url>
+<url><loc>https://duangjai.site/daily/sunday</loc><changefreq>daily</changefreq></url>
+<url><loc>https://duangjai.site/daily/monday</loc><changefreq>daily</changefreq></url>
+<url><loc>https://duangjai.site/daily/tuesday</loc><changefreq>daily</changefreq></url>
+<url><loc>https://duangjai.site/daily/wednesday</loc><changefreq>daily</changefreq></url>
+<url><loc>https://duangjai.site/daily/thursday</loc><changefreq>daily</changefreq></url>
+<url><loc>https://duangjai.site/daily/friday</loc><changefreq>daily</changefreq></url>
+<url><loc>https://duangjai.site/daily/saturday</loc><changefreq>daily</changefreq></url>
 </urlset>
