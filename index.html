@@ -5,6 +5,13 @@
 <meta name="google-site-verification" content="o58eSgb8-1rn-m7oYyBzvsasI6WFrMW9g6svwYr6bfM" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="ดวงใจ เว็บดูดวงภาษาไทย ไพ่ยิปซี ดูดวงรายวันตามวันเกิดและราศี ทำนายฝัน ดวงเนื้อคู่ คำคมประจำวัน">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ดวงใจ">
+<meta property="og:title" content="ดวงใจ – เปิดไพ่ยิปซี ดูดวงรายวัน ทำนายฝัน ฟรี">
+<meta property="og:description" content="ตั้งจิตแล้วเปิดไพ่ยิปซี 1, 3 หรือ 5 ใบ ดูดวงรายวันตามวันเกิด ทำนายฝันพร้อมเลขเด่น">
+<meta property="og:url" content="https://duangjai.site/">
+<meta property="og:locale" content="th_TH">
+<link rel="canonical" href="https://duangjai.site/">
 <title>ดวงใจ – ไพ่ยิปซี ดูดวงรายวัน ทำนายฝัน</title>
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f6f1ff;--card:#fff;--ink:#2a1b4d;--mute:#6b5d8f;--acc:#7b4bd6;--gold:#b8860b;--line:#ddd0f5}
@@ -40,6 +47,10 @@ input{width:100%;padding:10px;border-radius:10px;border:1px solid var(--line);ba
 .note{text-align:center;color:var(--mute);font-size:.75rem;margin-top:18px}
 .bar{height:10px;background:var(--line);border-radius:6px;overflow:hidden;margin:4px 0 10px}.bar i{display:block;height:100%;background:var(--acc)}
 [hidden]{display:none}
+.share{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;margin:12px 0 4px}
+.share .lbl{width:100%;text-align:center}
+.sh{display:inline-block;padding:8px 16px;border-radius:10px;font:inherit;font-size:.95rem;text-decoration:none;border:0;cursor:pointer;color:#fff}
+.sh.line{background:#06c755}.sh.fb{background:#1877f2}.sh.cp{background:var(--mute)}
 </style>
 </head>
 <body>
@@ -143,8 +154,18 @@ $('cards').onclick=e=>{const el=e.target.closest('.c');if(!el||el.dataset.o)retu
  const i=+el.dataset.i,c=pick[i],pos=POS[N];el.dataset.o=1;
  el.innerHTML=`<div class="front"><span class="lbl">${pos[i]}</span><b>${c[0]}</b>${c[1]}</div>`;
  $('tres').innerHTML+=`<p><span class="tag">${pos[i]}</span> <b>${c[1]}</b><br>${c[2]}</p>`;
- if(++shown==N)$('tres').innerHTML+=`<p class="lbl">สรุป: ลองนำความหมายของไพ่ทุกใบมาเชื่อมโยงกับเรื่องที่คุณตั้งใจไว้</p>`;
+ if(++shown==N){$('tres').innerHTML+=`<p class="lbl">สรุป: ลองนำความหมายของไพ่ทุกใบมาเชื่อมโยงกับเรื่องที่คุณตั้งใจไว้</p>`;shareBox()}
 };
+function shareBox(){
+ const url='https://duangjai.site/';
+ const txt='ไพ่ยิปซีของฉันวันนี้\n'+pick.map((c,i)=>`${POS[N][i]}: ${c[1]}`).join('\n')+'\nลองเปิดไพ่ของคุณที่ '+url;
+ const line='https://social-plugins.line.me/lineit/share?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(txt);
+ const fb='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url);
+ $('tres').insertAdjacentHTML('beforeend',`<div class="share"><span class="lbl">แชร์ผลไพ่ให้เพื่อน</span><a class="sh line" href="${line}" target="_blank" rel="noopener">LINE</a><a class="sh fb" href="${fb}" target="_blank" rel="noopener">Facebook</a><button class="sh cp" type="button">คัดลอกผลไพ่</button></div>`);
+ $('tres').querySelector('.cp').onclick=async e=>{const b=e.currentTarget;
+  try{await navigator.clipboard.writeText(txt);b.textContent='คัดลอกแล้ว'}catch(_){b.textContent='คัดลอกไม่ได้'}
+  setTimeout(()=>b.textContent='คัดลอกผลไพ่',1800)};
+}
 $('shuf').onclick=deal;deal();
 
 /* ---------- ดวงรายวัน ---------- */
