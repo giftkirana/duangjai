@@ -1,0 +1,9 @@
+{
+  // เว็บดูดวง duangjai.site เป็นไฟล์ static ล้วน
+  "name": "duangjai",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./",
+    "html_handling": "auto-trailing-slash"
+  }
+}

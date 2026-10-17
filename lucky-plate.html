@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7389759760990204" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ทะเบียนรถมงคล เช็กทะเบียนรถฟรี ผลรวมและอักษรกาลกิณี – ดวงใจ</title>
+<meta name="description" content="เช็กทะเบียนรถมงคลฟรี คำนวณผลรวมทะเบียนรถจากตัวอักษรและตัวเลข ดูคู่เลข และอักษรกาลกิณีตามวันเกิดของเจ้าของรถ">
+<link rel="canonical" href="https://duangjai.site/lucky-plate">
+<link rel="stylesheet" href="style.css">
+<style>
+h1{text-align:center}.sub{text-align:center;color:var(--mute);margin:0 0 10px}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin:6px 0 4px;padding-bottom:4px}
+.tabs a{flex:1 0 auto;white-space:nowrap;padding:9px 12px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;text-decoration:none;text-align:center;font-size:.92rem}
+.tabs a.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+input,select{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+input#num{font-size:1.4rem;letter-spacing:.12em;text-align:center}
+label{display:block;margin:10px 0 4px;color:var(--mute);font-size:.9rem}
+.btn{display:block;width:100%;margin-top:14px;background:var(--acc);color:#fff;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-size:1.05rem;cursor:pointer}
+.err{color:#d64545;font-size:.9rem;margin:8px 0 0}
+.score{text-align:center;padding:6px 0}.score b{font-size:3rem;color:var(--gold);line-height:1.1;display:block}.score span{color:var(--mute)}
+.asp{display:grid;grid-template-columns:5.5em 1fr 2.5em;gap:4px 8px;align-items:center;font-size:.92rem}
+.bar{height:10px;background:var(--line);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--acc)}
+.pr{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--line)}.pr:first-child{border-top:0}
+.pn{flex:0 0 3.2em;text-align:center;font-weight:700;font-size:1.15rem;border-radius:8px;padding:2px 0}
+.g{background:#e4f6e9;color:#1d6b3a}.n{background:#efeaf9;color:#5a4a86}.b{background:#fde8e8;color:#a33}
+@media (prefers-color-scheme:dark){.g{background:#16422a;color:#8fe3ad}.n{background:#33275a;color:#cbbcf3}.b{background:#4a1f26;color:#ffadad}}
+.pt{flex:1;font-size:.93rem}.pt small{color:var(--mute)}
+table{width:100%;border-collapse:collapse;font-size:.92rem}td{padding:6px 4px;border-top:1px solid var(--line);vertical-align:top}td:first-child{white-space:nowrap;padding-right:10px}
+.digits{text-align:center;font-size:1.5rem;letter-spacing:.06em;margin:4px 0 4px}.digits i{font-style:normal;color:#d64545;text-decoration:underline}
+.calc{text-align:center;color:var(--mute);font-size:.9rem;margin:0 0 8px}
+#pay img{display:block;margin:10px auto;max-width:220px;width:100%;height:auto;background:#fff;padding:8px;border-radius:10px}
+</style>
+</head>
+<body><div class="w">
+<p class="nav"><a href="./">🔮 ดวงใจ</a> · <a href="articles/">บทความ</a> · <a href="dream/">ทำนายฝัน</a></p>
+<h1>🚗 ทะเบียนรถมงคล</h1>
+<p class="sub">คำนวณผลรวมจากตัวอักษรและตัวเลข พร้อมเช็กอักษรกาลกิณี</p>
+<div class="tabs"><a href="lucky-number">📱 เบอร์โทร</a><a href="lucky-house">🏠 บ้านเลขที่</a><a href="lucky-plate" class=on>🚗 ทะเบียนรถ</a><a href="lucky-id">🪪 เลขบัตรประชาชน</a></div>
+
+<div class="box">
+<label for="num">ทะเบียนรถ (ไม่ต้องใส่จังหวัด)</label>
+<input id="num" inputmode="text" autocomplete="off" placeholder="เช่น 1กข 1234" maxlength="12">
+<label for="day">วันเกิด (ไม่บังคับ ใช้หาเลขกาลกิณี)</label>
+<select id="day"><option value="">– ไม่ระบุ –</option><option value="0">อาทิตย์</option><option value="1">จันทร์</option><option value="2">อังคาร</option><option value="3">พุธ (กลางวัน)</option><option value="7">พุธ (กลางคืน)</option><option value="4">พฤหัสบดี</option><option value="5">ศุกร์</option><option value="6">เสาร์</option></select>
+<button class="btn" id="go">วิเคราะห์</button>
+<p class="err" id="err" hidden></p>
+</div>
+
+<div id="res" hidden>
+<div class="box">
+<div class="digits" id="dg"></div>
+<p class="calc" id="calc"></p>
+<div class="score"><b id="sc"></b><span id="sg"></span></div>
+<div class="asp" id="asp"></div>
+</div>
+<div class="box"><h2 style="margin-top:0">ผลรวม <span id="sum" style="color:var(--gold)"></span></h2><p id="sumt" style="margin:0"></p></div>
+<div class="box" id="dayb" hidden><h2 style="margin-top:0">ตามวันเกิด</h2><p id="dayt" style="margin:0"></p></div>
+<div class="box" id="prb"><h2 style="margin-top:0">ความหมายทีละคู่เลข</h2><p class="lbl" id="prn" style="margin:0 0 6px"></p><div id="prs"></div></div>
+<div class="box" id="pay" hidden></div>
+</div>
+
+<h2>วิธีคำนวณทะเบียนรถมงคล</h2><div class="box"><p>ทะเบียนรถมงคลคำนวณจาก <b>ค่าของตัวอักษร + ตัวเลขทุกตัว</b> รวมกันเป็นผลรวมทะเบียน ไม่นับชื่อจังหวัด จากนั้นดูคู่เลขในส่วนตัวเลข และเช็กว่ามีอักษรหรือเลขกาลกิณีของวันเกิดเจ้าของรถหรือไม่</p></div>
+<h2>ค่าตัวอักษรในทะเบียนรถ</h2><div class="box"><table>
+<tr><td><b>1</b></td><td>ก ด ถ ท ภ</td></tr><tr><td><b>2</b></td><td>ข ง ช บ ป</td></tr><tr><td><b>3</b></td><td>ฆ ต ฑ ฒ</td></tr>
+<tr><td><b>4</b></td><td>ค ธ ร ญ ษ</td></tr><tr><td><b>5</b></td><td>ฉ ฌ ณ น ม ห ฎ ฮ ฬ</td></tr><tr><td><b>6</b></td><td>จ ล ว อ</td></tr>
+<tr><td><b>7</b></td><td>ซ ศ ส</td></tr><tr><td><b>8</b></td><td>ย ผ ฝ พ ฟ</td></tr><tr><td><b>9</b></td><td>ฏ ฐ</td></tr></table></div>
+<h2>อักษรกาลกิณีตามวันเกิด</h2><div class="box"><p style="margin-top:0">ควรเลี่ยงตัวอักษรเหล่านี้ในทะเบียนรถ</p><table>
+<tr><td><b>อาทิตย์</b></td><td>ศ ษ ส ห ฬ อ ฮ</td></tr><tr><td><b>จันทร์</b></td><td>สระ (ไม่มีในทะเบียนรถ)</td></tr>
+<tr><td><b>อังคาร</b></td><td>ก ข ค ฆ ง</td></tr><tr><td><b>พุธ (กลางวัน)</b></td><td>จ ฉ ช ซ ฌ ญ</td></tr>
+<tr><td><b>พุธ (กลางคืน)</b></td><td>บ ป ผ ฝ พ ฟ ภ ม</td></tr><tr><td><b>พฤหัสบดี</b></td><td>ด ต ถ ท ธ น</td></tr>
+<tr><td><b>ศุกร์</b></td><td>ย ร ล ว</td></tr><tr><td><b>เสาร์</b></td><td>ฎ ฏ ฐ ฑ ฒ ณ</td></tr></table><p>เลขกาลกิณีตามวันเกิด: อาทิตย์ 6 · จันทร์ 1 · อังคาร 2 · พุธกลางวัน 3 · พุธกลางคืน 5 · พฤหัสบดี 7 · ศุกร์ 8 · เสาร์ 4</p></div>
+
+<p class="note"><a href="./">หน้าแรก</a> · <a href="lucky-number">เบอร์มงคล</a> · <a href="lucky-house">บ้านเลขที่</a> · <a href="lucky-plate">ทะเบียนรถ</a> · <a href="lucky-id">เลขบัตรประชาชน</a><br><a href="articles/">บทความ</a> · <a href="dream/">คำทำนายฝันทั้งหมด</a> · <a href="about">เกี่ยวกับเรา</a> · <a href="privacy">นโยบายความเป็นส่วนตัว</a> · <a href="contact">ติดต่อเรา</a><br>เพื่อความบันเทิงเท่านั้น ไม่ควรใช้ตัดสินใจเรื่องสำคัญ</p>
+</div>
+<script>
+const MODE = "plate";
+/* ===== ตั้งค่าบริการเสียเงิน (เฉพาะหน้าเบอร์โทร) =====
+   ใส่เบอร์พร้อมเพย์ (10 หลัก) หรือเลขบัตรประชาชน (13 หลัก) เพื่อเปิดกล่อง "คัดเบอร์มงคลเฉพาะคุณ"
+   ถ้าปล่อยว่าง กล่องนี้จะไม่แสดง */
+const PROMPTPAY_ID = "";
+const PRICE = 99;
+const CONTACT = "duangjaicontact@gmail.com";
+
+const P = {"00": ["b", "", "ความว่างเปล่า เริ่มต้นแล้วมักไม่ต่อเนื่อง ทำอะไรต้องใช้แรงมากกว่าปกติ"], "01": ["n", "w", "มีไอเดียใหม่และกล้าเริ่มต้น แต่ต้องใช้แรงผลักมากกว่าจะเห็นผล"], "02": ["b", "", "อารมณ์แปรปรวน คิดมาก ใจไม่นิ่ง ตัดสินใจยาก"], "03": ["b", "", "ใจร้อน วู่วาม ระวังอุบัติเหตุและคำพูดที่ทำร้ายคนอื่น"], "04": ["n", "", "พูดเก่ง หัวไว แต่ขาดความต่อเนื่อง ทำหลายอย่างแล้วไม่สุด"], "05": ["n", "", "มีผู้ใหญ่ให้ความช่วยเหลือ แต่ต้องอดทนรอจังหวะ"], "06": ["n", "l", "มีเสน่ห์ คนเข้าหาง่าย แต่ความรักมักไม่มั่นคง"], "07": ["b", "", "อุปสรรคสะสม ภาระหนัก ทำแล้วเหนื่อยแต่ผลตอบแทนน้อย"], "08": ["b", "", "ชีวิตวุ่นวาย ถูกชักจูงง่าย ระวังหลงทางกับสิ่งที่ไม่ใช่"], "09": ["n", "h", "สัญชาตญาณดี มีลางสังหรณ์ แต่มักลังเลไม่กล้าตัดสินใจ"], "11": ["n", "w", "มั่นใจในตัวเองสูง มีความเป็นผู้นำ แต่อาจดื้อและไม่ฟังใคร"], "12": ["b", "", "เหตุผลกับอารมณ์ขัดกัน ระวังทะเลาะกับคนใกล้ตัว"], "13": ["b", "", "อีโก้สูง ใจร้อน ระวังมีปากเสียงกับหัวหน้าหรือคนในบ้าน"], "14": ["g", "mw", "ปัญญาดี เจรจาเก่ง เด่นด้านค้าขาย มีผู้ใหญ่สนับสนุน"], "15": ["g", "wh", "ผู้ใหญ่อุปถัมภ์ มีบารมี คนเชื่อถือ ได้รับตำแหน่งหน้าที่ที่ดี"], "16": ["g", "ml", "มีเสน่ห์ ชื่อเสียงดี การเงินคล่องตัว ได้รับความเอ็นดูจากคนรอบข้าง"], "17": ["b", "", "งานหนัก ความเครียดสูง เจออุปสรรคในหน้าที่การงานบ่อย"], "18": ["b", "", "มีความเสี่ยง ระวังถูกหลอก และอย่าเข้าไปยุ่งกับเรื่องผิดกฎหมาย"], "19": ["g", "wh", "ความสำเร็จ ได้รับโอกาสใหม่ มีสิ่งศักดิ์สิทธิ์คุ้มครอง"], "22": ["n", "l", "อ่อนไหว คิดมาก แต่มีจินตนาการและความละเอียดอ่อน"], "23": ["b", "", "อารมณ์ร้อนแรง ใจเร็ว ระวังความขัดแย้งในความสัมพันธ์"], "24": ["g", "lm", "เสน่ห์ทางคำพูด ค้าขายดี คนรักใคร่ เอ็นดู"], "25": ["n", "h", "ใจดี มีศีลธรรม แต่ขาดความเด็ดขาดในการตัดสินใจ"], "26": ["n", "l", "ความรักหวาน แต่ใช้จ่ายเก่ง เก็บเงินยาก"], "27": ["b", "", "ความกังวลและแรงกดดันสะสม พักผ่อนน้อย ป่วยง่าย"], "28": ["b", "", "อารมณ์ปั่นป่วน ใช้เงินฟุ่มเฟือย ตามใจตัวเองเกินไป"], "29": ["n", "h", "ลางสังหรณ์ดี เด่นด้านศิลปะ แต่บางครั้งเพ้อฝันเกินจริง"], "33": ["n", "w", "ขยัน กล้าหาญ ไม่ย่อท้อ แต่ใจร้อน"], "34": ["n", "w", "ทำงานเร็ว พูดเก่ง แต่ระวังพูดพลาดเพราะรีบ"], "35": ["g", "wh", "กล้าคิดกล้าทำบนพื้นฐานคุณธรรม ผู้ใหญ่ให้การสนับสนุน"], "36": ["g", "lm", "ความรักมั่นคง มีเสน่ห์ เด่นด้านงานศิลปะและงานบริการ"], "37": ["b", "", "แข่งขันหนัก ต้องต่อสู้ตลอด ระวังเรื่องคดีความ"], "38": ["b", "", "วู่วาม ใช้กำลัง ระวังอุบัติเหตุและการตัดสินใจเร็วเกินไป"], "39": ["n", "h", "กล้าเสี่ยง มีโชคบ้างแต่ไม่สม่ำเสมอ"], "44": ["g", "w", "ปัญญาดี สื่อสารเก่ง เด่นด้านการเจรจาและการเรียน"], "45": ["g", "wmh", "ปัญญาและคุณธรรม คำพูดน่าเชื่อถือ ผู้ใหญ่เมตตา"], "46": ["g", "mw", "การเงินจากการค้าขาย เจรจาราบรื่น ปิดการขายเก่ง"], "47": ["n", "w", "วางแผนเก่ง รอบคอบ แต่แบกภาระมาก"], "48": ["b", "", "คำพูดพลาด ถูกนินทา ระวังเรื่องเอกสารและสัญญา"], "49": ["g", "wh", "ปัญญาเฉียบแหลม เด่นด้านวิชาการและศาสตร์ลึกลับ"], "55": ["g", "wh", "คุณธรรม ความมั่นคง มีผู้ใหญ่ค้ำชู ชีวิตราบรื่น"], "56": ["g", "mlh", "โชคลาภ การเงินมั่นคง ความรักราบรื่น"], "57": ["n", "w", "อดทน ทำงานหนัก แต่ผลลัพธ์คุ้มค่า"], "58": ["n", "m", "มีโชค แต่ต้องระวังหลงผิดหรือได้มาแล้วเสียไป"], "59": ["g", "h", "สิ่งศักดิ์สิทธิ์คุ้มครอง สติปัญญาดี จิตใจสงบ"], "66": ["g", "ml", "เสน่ห์แรง เงินทองไหลมา ชีวิตสุขสบาย"], "67": ["b", "", "ความรักมีอุปสรรค ใช้เงินเกินตัว"], "68": ["n", "m", "เงินคล่องแต่ใช้จ่ายฟุ่มเฟือย ระวังเรื่องรักซ้อน"], "69": ["g", "lh", "ความรักโรแมนติก เด่นด้านศิลปะ มีโชคจากคนรอบข้าง"], "77": ["b", "", "ภาระหนักซ้ำซ้อน เครียด งานล่าช้า"], "78": ["g", "mw", "อำนาจบารมี กล้าลงทุน เหมาะกับคนทำธุรกิจ"], "79": ["n", "h", "อดทน มีลางสังหรณ์ แต่ชอบเก็บตัว"], "88": ["n", "m", "ทะเยอทะยาน กล้าเสี่ยงสูง ได้เร็วแต่ก็เสียเร็ว"], "89": ["g", "mw", "สำเร็จจากการลงทุน เด่นเรื่องงานต่างประเทศ ไหวพริบดี"], "99": ["g", "h", "ปัญญาญาณสูง มีโชคจากสิ่งศักดิ์สิทธิ์"]};
+const S1 = {"0": "ความว่าง ควรเสริมด้วยคู่เลขดีด้านอื่น", "1": "ความเป็นผู้นำ ความมั่นใจ เริ่มต้นสิ่งใหม่ได้ดี", "2": "ความอ่อนโยน เสน่ห์ ความรักและครอบครัวอบอุ่น", "3": "ความขยัน กล้าหาญ แต่ควรระวังใจร้อน", "4": "ปัญญา การเจรจา การค้าขายคล่อง", "5": "คุณธรรม ผู้ใหญ่อุปถัมภ์ ความมั่นคง", "6": "เสน่ห์ ความสุข เงินทองคล่องตัว", "7": "ความอดทน แต่มีภาระและอุปสรรคมาก", "8": "ความทะเยอทะยาน กล้าเสี่ยง ได้เร็วเสียเร็ว", "9": "สิ่งศักดิ์สิทธิ์คุ้มครอง ลางสังหรณ์ดี"}, S1G = {"0": "n", "1": "n", "2": "n", "3": "n", "4": "g", "5": "g", "6": "g", "7": "b", "8": "n", "9": "g"};
+const DAY = ["อาทิตย์","จันทร์","อังคาร","พุธ (กลางวัน)","พฤหัสบดี","ศุกร์","เสาร์","พุธ (กลางคืน)"];
+const KALA = [6,1,2,3,7,8,4,5];   // เลขกาลกิณี
+const SRI  = [4,7,5,8,1,3,6,2];   // เลขส่งเสริม
+// ค่าตัวอักษรทะเบียนรถ
+const LV = {};
+[["กดถทภฤ",1],["ขงชบป",2],["ฆตฑฒ",3],["คธรญษ",4],["ฉฌณนมหฎฮฬ",5],["จลวอ",6],["ซศส",7],["ยผฝพฟ",8],["ฏฐ",9]].forEach(([s,v])=>[...s].forEach(c=>LV[c]=v));
+// อักษรตามวรรคดาว (ใช้หาอักษรกาลกิณี) key = เลขดาว
+const LG = {1:"",2:"กขคฆง",3:"จฉชซฌญ",4:"ฎฏฐฑฒณ",7:"ดตถทธน",5:"บปผฝพฟภม",8:"ยรลว",6:"ศษสหฬอฮ"};
+const ASP = {m:"การเงิน",w:"การงาน",l:"ความรัก",h:"โชคลาภ"};
+const $ = id => document.getElementById(id);
+const pair = s => P[s] || P[s[1]+s[0]];
+const fail = t => { $("err").textContent = t; $("err").hidden = false; $("res").hidden = true; };
+
+function parse(v){
+  v = v.trim();
+  if(MODE==="phone"){ const d=v.replace(/\D/g,""); if(d.length!==10||d[0]!=="0") return fail("กรุณาใส่เบอร์โทรศัพท์ 10 หลักที่ขึ้นต้นด้วย 0");
+    return {show:d.slice(0,3)+"-"+d.slice(3,6)+"-"+d.slice(6), digits:d.slice(1), all:d, letters:"", lastW:4}; }
+  if(MODE==="house"){ const d=v.replace(/\D/g,""); if(!d.length||d.length>12) return fail("กรุณาใส่บ้านเลขที่ เช่น 99/123");
+    return {show:v.replace(/[^\d\/\- ]/g,""), digits:d, all:d, letters:"", lastW:0}; }
+  if(MODE==="id"){ const d=v.replace(/\D/g,""); if(d.length!==4) return fail("กรุณาใส่เลขท้ายบัตรประชาชน 4 ตัว");
+    return {show:d, digits:d, all:d, letters:"", lastW:0}; }
+  // plate
+  const m = v.replace(/\s+/g,"").match(/^(\d?)([ก-ฮ]{1,3})(\d{1,4})$/);
+  if(!m) return fail("กรุณาใส่ทะเบียนรถ เช่น 1กข 1234 หรือ กข 1234");
+  return {show:m[1]+m[2]+" "+m[3], digits:m[3], all:m[1]+m[3], letters:m[2], lastW:0};
+}
+
+function analyze(){
+  const x = parse($("num").value); if(!x) return;
+  $("err").hidden = true;
+  const dayV = $("day").value, day = dayV==="" ? null : +dayV, kala = day===null ? null : KALA[day];
+  const B = x.digits;
+  let score = 50, asp = {m:0,w:0,l:0,h:0}, html = "";
+  const np = Math.max(0,B.length-1);
+  for(let i=0;i<np;i++){
+    const s=B[i]+B[i+1], [g,a,t]=pair(s);
+    const wgt = x.lastW && i>=B.length-x.lastW ? 1.6 : 1;
+    score += (g==="g"?7:g==="b"?-8:1)*wgt;
+    for(const k in asp) asp[k] += g==="g" ? (a.includes(k)?3:.6)*wgt : g==="b" ? -1.4*wgt : (a.includes(k)?1:0);
+    html += `<div class="pr"><div class="pn ${g}">${s}</div><div class="pt">${t}<br><small>${g==="g"?"คู่เลขมงคล":g==="b"?"ควรระวัง":"กลาง ๆ"}${x.lastW&&wgt>1?" · ตำแหน่งท้ายเบอร์":""}</small></div></div>`;
+  }
+  // ผลรวม
+  const lsum = [...x.letters].reduce((s,c)=>s+(LV[c]||0),0);
+  const sum = [...x.all].reduce((s,c)=>s+ +c,0) + lsum;
+  let sg, st;
+  if(sum<10){ sg=S1G[sum]; st=S1[sum]; } else { const p=pair(String(sum).slice(-2)); sg=p[0]; st=p[2]; }
+  const sw = MODE==="phone" ? 8 : 18;
+  score += sg==="g" ? sw : sg==="b" ? -sw : 0;
+  const sa = sum<10 ? null : pair(String(sum).slice(-2))[1];
+  if(sa) for(const k in asp) if(sa.includes(k) && sg==="g") asp[k]+=3;
+  if(sg==="b") for(const k in asp) asp[k]-=1.5;
+  // วันเกิด
+  let kc=0, kl=[];
+  if(kala!==null){
+    kc=[...x.all].filter(c=>+c===kala).length; score -= Math.min(kc,3)*5;
+    if(x.letters){ kl=[...x.letters].filter(c=>LG[kala].includes(c)); score -= kl.length*10; }
+    if(x.all.includes(String(SRI[day]))) score += 3;
+  }
+  score = Math.max(8, Math.min(98, Math.round(score)));
+  // แสดงผล
+  const mark = s => [...s].map(c => (kala!==null && (+c===kala && /\d/.test(c) || kl.includes(c))) ? `<i>${c}</i>` : c).join("");
+  $("dg").innerHTML = mark(x.show);
+  $("calc").textContent = x.letters ? `อักษร ${[...x.letters].map(c=>c+"="+(LV[c]||0)).join(" ")} รวม ${lsum} + ตัวเลข ${sum-lsum} = ${sum}` : "";
+  $("calc").hidden = !x.letters;
+  $("sc").textContent = score;
+  const noun = {phone:"เบอร์",house:"บ้านเลขที่",plate:"ทะเบียน",id:"เลขชุดนี้"}[MODE];
+  $("sg").textContent = score>=80 ? `${noun}มงคลมาก` : score>=65 ? `${noun}ดี` : score>=50 ? `${noun}กลาง ๆ` : (MODE==="id" ? "ควรเสริมด้วยเบอร์หรือทะเบียนที่ดี" : `${noun}ควรพิจารณาเปลี่ยน`);
+  $("asp").innerHTML = Object.keys(ASP).map(k=>{ const v=Math.max(5,Math.min(98,Math.round(45+asp[k]*4))); return `<span>${ASP[k]}</span><div class="bar"><i style="width:${v}%"></i></div><span>${v}</span>`; }).join("");
+  $("sum").textContent = sum;
+  $("sumt").textContent = (sg==="g"?"ผลรวมมงคล: ":sg==="b"?"ผลรวมควรระวัง: ":"ผลรวมกลาง ๆ: ") + st;
+  if(kala!==null){
+    $("dayb").hidden=false;
+    let t = `คนเกิดวัน${DAY[day]} มีเลขกาลกิณีคือ <b>${kala}</b> และเลขส่งเสริมคือ <b>${SRI[day]}</b>`;
+    if(MODE==="plate") t += `<br>อักษรกาลกิณีของคุณ: <b>${LG[kala] ? [...LG[kala]].join(" ") : "สระ (ไม่มีในทะเบียนรถ)"}</b>`;
+    t += "<br>";
+    const bad = [];
+    if(kc) bad.push(`เลข ${kala} อยู่ ${kc} ตัว`);
+    if(kl.length) bad.push(`อักษรกาลกิณี ${kl.join(" ")}`);
+    t += bad.length ? `พบ${bad.join(" และ")} (ขีดเส้นใต้สีแดงด้านบน) ${MODE==="id"?"เลขบัตรเปลี่ยนไม่ได้ ให้เลือกเบอร์หรือทะเบียนที่ไม่มีเลขนี้มาเสริมแทน":"ควรเลี่ยงถ้าจะเลือกใหม่"}` : `ไม่มีเลข${MODE==="plate"?"หรืออักษร":""}กาลกิณีของคุณ ถือว่าดี`;
+    if(x.all.includes(String(SRI[day]))) t += ` และมีเลขส่งเสริมช่วยเสริมดวง`;
+    $("dayt").innerHTML = t;
+  } else $("dayb").hidden = true;
+  $("prb").hidden = np===0;
+  $("prn").textContent = MODE==="phone" ? "อ่านจากหลักที่ 2 ถึงหลักสุดท้าย คู่เลขท้ายมีผลมากที่สุด" : MODE==="plate" ? "อ่านจากส่วนตัวเลขของทะเบียน" : "อ่านคู่เลขที่อยู่ติดกันทีละคู่";
+  $("prs").innerHTML = html;
+  $("res").hidden = false;
+  if(MODE==="phone") showPay(x.all, score);
+  $("res").scrollIntoView({behavior:"smooth",block:"start"});
+  if(MODE!=="id") try{ history.replaceState(null,"","?n="+encodeURIComponent($("num").value.trim())+(dayV!==""?"&d="+dayV:"")); }catch(e){}
+}
+
+/* ===== พร้อมเพย์ QR (มาตรฐาน EMVCo) ===== */
+function crc16(s){ let c=0xFFFF; for(let i=0;i<s.length;i++){ c^=s.charCodeAt(i)<<8; for(let j=0;j<8;j++) c = c&0x8000 ? (c<<1)^0x1021 : c<<1; c&=0xFFFF; } return c.toString(16).toUpperCase().padStart(4,"0"); }
+function tlv(id,v){ return id+String(v.length).padStart(2,"0")+v; }
+function ppPayload(id, amt){
+  id = id.replace(/\D/g,"");
+  const acc = id.length===13 ? tlv("02",id) : tlv("01",("0000000000000"+"66"+id.replace(/^0/,"")).slice(-13));
+  const p = tlv("00","01")+tlv("01","12")+tlv("29",tlv("00","A000000677010111")+acc)+tlv("53","764")+tlv("54",amt.toFixed(2))+tlv("58","TH")+"6304";
+  return p+crc16(p);
+}
+function showPay(raw, score){
+  const box = $("pay");
+  if(!PROMPTPAY_ID){ box.hidden = true; return; }
+  box.hidden = false;
+  box.innerHTML = `<h2 style="margin-top:0">✨ คัดเบอร์มงคลเฉพาะคุณ ${PRICE} บาท</h2>
+  <p>${score<65?"เบอร์นี้ยังไม่ส่งเสริมเท่าที่ควร ":""}ให้เราคัดเบอร์ที่เข้ากับวันเกิดและเรื่องที่คุณอยากเสริม (การเงิน การงาน ความรัก) ให้ 5 เบอร์ พร้อมคำอธิบาย ส่งให้ภายใน 24 ชั่วโมง</p>
+  <ol style="padding-left:1.2em;margin:0"><li>สแกนจ่ายผ่านพร้อมเพย์ด้านล่าง</li><li>ส่งสลิป + วันเกิด + เครือข่ายที่ใช้ + เรื่องที่อยากเสริม มาที่ <a href="mailto:${CONTACT}?subject=คัดเบอร์มงคล&body=เบอร์ปัจจุบัน: ${raw}%0Aวันเกิด:%0Aเครือข่าย:%0Aอยากเสริมเรื่อง:%0A(แนบสลิป)">${CONTACT}</a></li></ol>
+  <div id="qr"></div><p class="lbl" style="text-align:center;margin:0">พร้อมเพย์ ${PRICE} บาท</p>`;
+  const go = () => { const q = qrcode(0,"M"); q.addData(ppPayload(PROMPTPAY_ID,PRICE)); q.make(); $("qr").innerHTML = q.createImgTag(6,8); };
+  if(window.qrcode) go(); else { const s=document.createElement("script"); s.src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"; s.onload=go; document.head.appendChild(s); }
+}
+
+$("go").onclick = analyze;
+$("num").addEventListener("keydown", e => { if(e.key==="Enter") analyze(); });
+try{ const u=new URLSearchParams(location.search); if(MODE!=="id" && u.get("n")){ $("num").value=u.get("n"); if(u.get("d")!==null) $("day").value=u.get("d"); analyze(); } }catch(e){}
+</script>
+</body>
+</html>
