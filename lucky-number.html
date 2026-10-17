@@ -115,7 +115,7 @@ table{width:100%;border-collapse:collapse;font-size:.92rem}td{padding:6px 4px;bo
 <tr><td><b>67 / 76</b></td><td>ความรักมีอุปสรรค ใช้เงินเกินตัว</td></tr>
 <tr><td><b>77</b></td><td>ภาระหนักซ้ำซ้อน เครียด งานล่าช้า</td></tr></table></div>
 
-<p class="note"><a href="./">หน้าแรก</a> · <a href="lucky-number">เบอร์มงคล</a> · <a href="lucky-house">บ้านเลขที่</a> · <a href="lucky-plate">ทะเบียนรถ</a> · <a href="lucky-id">เลขบัตรประชาชน</a><br><a href="articles/">บทความ</a> · <a href="dream/">คำทำนายฝันทั้งหมด</a> · <a href="about">เกี่ยวกับเรา</a> · <a href="privacy">นโยบายความเป็นส่วนตัว</a> · <a href="contact">ติดต่อเรา</a><br>เพื่อความบันเทิงเท่านั้น ไม่ควรใช้ตัดสินใจเรื่องสำคัญ</p>
+<p class="note"><a href="./">หน้าแรก</a> · <a href="lucky-number">เบอร์มงคล</a> · <a href="lucky-house">บ้านเลขที่</a> · <a href="lucky-plate">ทะเบียนรถ</a> · <a href="lucky-id">เลขบัตรประชาชน</a><br><a href="articles/">บทความ</a> · <a href="dream/">คำทำนายฝันทั้งหมด</a> · <a href="number/">ความหมายเลขคู่</a> · <a href="about">เกี่ยวกับเรา</a> · <a href="privacy">นโยบายความเป็นส่วนตัว</a> · <a href="contact">ติดต่อเรา</a><br>เพื่อความบันเทิงเท่านั้น ไม่ควรใช้ตัดสินใจเรื่องสำคัญ</p>
 </div>
 <script>
 const MODE = "phone";
@@ -167,7 +167,7 @@ function analyze(){
     const wgt = x.lastW && i>=B.length-x.lastW ? 1.6 : 1;
     score += (g==="g"?7:g==="b"?-8:1)*wgt;
     for(const k in asp) asp[k] += g==="g" ? (a.includes(k)?3:.6)*wgt : g==="b" ? -1.4*wgt : (a.includes(k)?1:0);
-    html += `<div class="pr"><div class="pn ${g}">${s}</div><div class="pt">${t}<br><small>${g==="g"?"คู่เลขมงคล":g==="b"?"ควรระวัง":"กลาง ๆ"}${x.lastW&&wgt>1?" · ตำแหน่งท้ายเบอร์":""}</small></div></div>`;
+    html += `<div class="pr"><div class="pn ${g}">${s}</div><div class="pt">${t}<br><small>${g==="g"?"คู่เลขมงคล":g==="b"?"ควรระวัง":"กลาง ๆ"}${x.lastW&&wgt>1?" · ตำแหน่งท้ายเบอร์":""}${/^\d\d$/.test(s)?` · <a href="number/${s}">อ่านความหมายเต็ม</a>`:""}</small></div></div>`;
   }
   // ผลรวม
   const lsum = [...x.letters].reduce((s,c)=>s+(LV[c]||0),0);

@@ -62,7 +62,7 @@ table{width:100%;border-collapse:collapse;font-size:.92rem}td{padding:6px 4px;bo
 <h2>วิธีดูบ้านเลขที่มงคล</h2><div class="box"><p>การดูบ้านเลขที่มงคลจะเน้น <b>ผลรวมของตัวเลขทุกตัว</b> (ไม่นับเครื่องหมาย / หรือ -) เป็นหลัก เพราะสะท้อนพลังโดยรวมของบ้าน จากนั้นจึงดูคู่เลขที่อยู่ติดกัน ถ้าเป็นคอนโดให้ใส่เลขห้องด้วย เช่น 88/1205</p>
 <p>ผลรวมที่นิยมสำหรับบ้าน ได้แก่ 14 · 15 · 19 · 24 · 36 · 41 · 42 · 45 · 46 · 50 · 51 · 54 · 55 · 56 · 59 ส่วนผลรวมที่ควรเลี่ยง เช่น 13 · 17 · 18 · 27 · 37 · 38 · 48</p><p>เลขกาลกิณีตามวันเกิด: อาทิตย์ 6 · จันทร์ 1 · อังคาร 2 · พุธกลางวัน 3 · พุธกลางคืน 5 · พฤหัสบดี 7 · ศุกร์ 8 · เสาร์ 4</p><p>ดูความหมายคู่เลขทั้งหมดได้ที่หน้า <a href="lucky-number">วิเคราะห์เบอร์มงคล</a></p></div>
 
-<p class="note"><a href="./">หน้าแรก</a> · <a href="lucky-number">เบอร์มงคล</a> · <a href="lucky-house">บ้านเลขที่</a> · <a href="lucky-plate">ทะเบียนรถ</a> · <a href="lucky-id">เลขบัตรประชาชน</a><br><a href="articles/">บทความ</a> · <a href="dream/">คำทำนายฝันทั้งหมด</a> · <a href="about">เกี่ยวกับเรา</a> · <a href="privacy">นโยบายความเป็นส่วนตัว</a> · <a href="contact">ติดต่อเรา</a><br>เพื่อความบันเทิงเท่านั้น ไม่ควรใช้ตัดสินใจเรื่องสำคัญ</p>
+<p class="note"><a href="./">หน้าแรก</a> · <a href="lucky-number">เบอร์มงคล</a> · <a href="lucky-house">บ้านเลขที่</a> · <a href="lucky-plate">ทะเบียนรถ</a> · <a href="lucky-id">เลขบัตรประชาชน</a><br><a href="articles/">บทความ</a> · <a href="dream/">คำทำนายฝันทั้งหมด</a> · <a href="number/">ความหมายเลขคู่</a> · <a href="about">เกี่ยวกับเรา</a> · <a href="privacy">นโยบายความเป็นส่วนตัว</a> · <a href="contact">ติดต่อเรา</a><br>เพื่อความบันเทิงเท่านั้น ไม่ควรใช้ตัดสินใจเรื่องสำคัญ</p>
 </div>
 <script>
 const MODE = "house";
@@ -114,7 +114,7 @@ function analyze(){
     const wgt = x.lastW && i>=B.length-x.lastW ? 1.6 : 1;
     score += (g==="g"?7:g==="b"?-8:1)*wgt;
     for(const k in asp) asp[k] += g==="g" ? (a.includes(k)?3:.6)*wgt : g==="b" ? -1.4*wgt : (a.includes(k)?1:0);
-    html += `<div class="pr"><div class="pn ${g}">${s}</div><div class="pt">${t}<br><small>${g==="g"?"คู่เลขมงคล":g==="b"?"ควรระวัง":"กลาง ๆ"}${x.lastW&&wgt>1?" · ตำแหน่งท้ายเบอร์":""}</small></div></div>`;
+    html += `<div class="pr"><div class="pn ${g}">${s}</div><div class="pt">${t}<br><small>${g==="g"?"คู่เลขมงคล":g==="b"?"ควรระวัง":"กลาง ๆ"}${x.lastW&&wgt>1?" · ตำแหน่งท้ายเบอร์":""}${/^\d\d$/.test(s)?` · <a href="number/${s}">อ่านความหมายเต็ม</a>`:""}</small></div></div>`;
   }
   // ผลรวม
   const lsum = [...x.letters].reduce((s,c)=>s+(LV[c]||0),0);

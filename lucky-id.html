@@ -62,7 +62,7 @@ table{width:100%;border-collapse:collapse;font-size:.92rem}td{padding:6px 4px;bo
 <h2>เลขท้ายบัตรประชาชนบอกอะไร</h2><div class="box"><p>ความเชื่อเรื่องเลขศาสตร์มองว่า เลข 4 ตัวท้ายของบัตรประชาชนเป็นเลขที่ติดตัวไปตลอดชีวิต จึงสะท้อนพื้นดวงด้านต่าง ๆ ได้ การอ่านจะดูคู่เลขที่อยู่ติดกัน 3 คู่ และผลรวมของเลข 4 ตัว เลขบัตรประชาชนเปลี่ยนไม่ได้ ถ้าผลออกมาไม่ดี สามารถเสริมด้วยเบอร์โทรศัพท์หรือทะเบียนรถที่ดีแทนได้</p>
 <p><b>ความปลอดภัย:</b> ไม่ควรเปิดเผยเลขบัตรประชาชนเต็ม 13 หลักให้เว็บไซต์ใด หน้านี้ขอแค่ 4 ตัวท้าย และคำนวณในเบราว์เซอร์ของคุณเท่านั้น</p><p>ดูความหมายคู่เลขทั้งหมดได้ที่หน้า <a href="lucky-number">วิเคราะห์เบอร์มงคล</a></p></div>
 
-<p class="note"><a href="./">หน้าแรก</a> · <a href="lucky-number">เบอร์มงคล</a> · <a href="lucky-house">บ้านเลขที่</a> · <a href="lucky-plate">ทะเบียนรถ</a> · <a href="lucky-id">เลขบัตรประชาชน</a><br><a href="articles/">บทความ</a> · <a href="dream/">คำทำนายฝันทั้งหมด</a> · <a href="about">เกี่ยวกับเรา</a> · <a href="privacy">นโยบายความเป็นส่วนตัว</a> · <a href="contact">ติดต่อเรา</a><br>เพื่อความบันเทิงเท่านั้น ไม่ควรใช้ตัดสินใจเรื่องสำคัญ</p>
+<p class="note"><a href="./">หน้าแรก</a> · <a href="lucky-number">เบอร์มงคล</a> · <a href="lucky-house">บ้านเลขที่</a> · <a href="lucky-plate">ทะเบียนรถ</a> · <a href="lucky-id">เลขบัตรประชาชน</a><br><a href="articles/">บทความ</a> · <a href="dream/">คำทำนายฝันทั้งหมด</a> · <a href="number/">ความหมายเลขคู่</a> · <a href="about">เกี่ยวกับเรา</a> · <a href="privacy">นโยบายความเป็นส่วนตัว</a> · <a href="contact">ติดต่อเรา</a><br>เพื่อความบันเทิงเท่านั้น ไม่ควรใช้ตัดสินใจเรื่องสำคัญ</p>
 </div>
 <script>
 const MODE = "id";
@@ -114,7 +114,7 @@ function analyze(){
     const wgt = x.lastW && i>=B.length-x.lastW ? 1.6 : 1;
     score += (g==="g"?7:g==="b"?-8:1)*wgt;
     for(const k in asp) asp[k] += g==="g" ? (a.includes(k)?3:.6)*wgt : g==="b" ? -1.4*wgt : (a.includes(k)?1:0);
-    html += `<div class="pr"><div class="pn ${g}">${s}</div><div class="pt">${t}<br><small>${g==="g"?"คู่เลขมงคล":g==="b"?"ควรระวัง":"กลาง ๆ"}${x.lastW&&wgt>1?" · ตำแหน่งท้ายเบอร์":""}</small></div></div>`;
+    html += `<div class="pr"><div class="pn ${g}">${s}</div><div class="pt">${t}<br><small>${g==="g"?"คู่เลขมงคล":g==="b"?"ควรระวัง":"กลาง ๆ"}${x.lastW&&wgt>1?" · ตำแหน่งท้ายเบอร์":""}${/^\d\d$/.test(s)?` · <a href="number/${s}">อ่านความหมายเต็ม</a>`:""}</small></div></div>`;
   }
   // ผลรวม
   const lsum = [...x.letters].reduce((s,c)=>s+(LV[c]||0),0);
