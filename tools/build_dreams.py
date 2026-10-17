@@ -10,6 +10,28 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 DREAM = ROOT / "dream"
 CONTENT = {**DREAMS_A, **DREAMS_B}
 
+def load_txt(path):
+    """อ่านไฟล์ dreams_more_*.txt (รูปแบบอธิบายไว้บรรทัดแรกของไฟล์)"""
+    out, cur = {}, None
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("# "):
+            continue
+        if line.startswith("## "):
+            num, verdict, summary = line[3:].split("|", 2)
+            cur = out[num.strip()] = dict(verdict=verdict.strip(), summary=summary.strip(), variants=[])
+        elif line.startswith("v: "):
+            t, x = line[3:].split("|", 1)
+            cur["variants"].append((t.strip(), x.strip()))
+        elif line[:3] in ("L: ", "W: ", "A: "):
+            cur[{"L": "love", "W": "work", "A": "advice"}[line[0]]] = line[3:].strip()
+    return out
+
+for _p in sorted(pathlib.Path(__file__).parent.glob("dreams_more_*.txt")):
+    for _k, _v in load_txt(_p).items():
+        assert _k not in CONTENT, _k
+        CONTENT[_k] = _v
+
 # ชื่อหน้าที่ภาษาแปลก -> ชื่อที่คนค้นจริง (ลิงก์เดิมใช้ได้เหมือนเดิม)
 RENAME = {
     "005": "ฝันเห็นคนตาย", "008": "ฝันว่าท้อง", "009": "ฝันว่าบินได้",
@@ -19,7 +41,8 @@ RENAME = {
     "101": "ฝันว่าว่ายน้ำ", "102": "ฝันว่าหลงทาง",
 }
 for k, v in CONTENT.items():
-    RENAME.setdefault(k, v["name"])
+    if "name" in v:
+        RENAME.setdefault(k, v["name"])
 
 AD_BOX = re.compile(r'<div class="ad"><!-- วางโค้ดโฆษณาตรงนี้ -->พื้นที่โฆษณา</div>\s*')
 H1_RE = re.compile(r"<h1>(.*?) ทำนายฝัน แปลว่าอะไร</h1>")
@@ -35,6 +58,8 @@ def current_names():
 OLD = current_names()
 NEW = {k: RENAME.get(k, v) for k, v in OLD.items()}
 BY_NAME = {v: k for k, v in NEW.items()}
+for k, v in CONTENT.items():
+    v.setdefault("name", NEW[k])
 
 def esc(s):
     return html.escape(s, quote=True)
@@ -96,14 +121,14 @@ for f in sorted(DREAM.glob("[0-9][0-9][0-9].html")):
         if len(desc) > 150:
             desc = desc[:148].rsplit(" ", 1)[0] + "…"
         out = re.sub(r'<meta name="description" content="[^"]*">',
-                     f'<meta name="description" content="{esc(desc)} เลขเด่น {esc(nums)}">', out, 1)
+                     f'<meta name="description" content="{esc(desc)} เลขเด่น {esc(nums)}">', out, count=1)
     elif new_name != old_name:
         out = out.replace(f"<h1>{old_name} ทำนายฝัน", f"<h1>{new_name} ทำนายฝัน", 1)
         out = out.replace(f'content="{old_name} ', f'content="{new_name} ', 1)
 
     if new_name != old_name or num in CONTENT:
         out = re.sub(r"<title>.*?</title>",
-                     f"<title>{esc(new_name)} แปลว่าอะไร ทำนายฝัน เลขเด่น {esc(nums)}</title>", out, 1)
+                     f"<title>{esc(new_name)} แปลว่าอะไร ทำนายฝัน เลขเด่น {esc(nums)}</title>", out, count=1)
     if '<link rel="canonical"' not in out:
         out = out.replace('<link rel="stylesheet"',
                           f'<link rel="canonical" href="https://duangjai.site/dream/{num}"><link rel="stylesheet"', 1)
