@@ -2,7 +2,9 @@
 ความหมายคู่เลขดึงจากตาราง P ในหน้า lucky-number.html เพื่อให้ตรงกับเครื่องเช็กเบอร์
 รันจากโฟลเดอร์หลักของเว็บ:  python3 tools/build_numbers.py
 """
-import html, json, pathlib, re
+import html, json, pathlib, re, sys
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from number_detail import D
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "number"
@@ -43,12 +45,13 @@ GOOD = sorted({p for p in (f"{i:02d}" for i in range(100)) if info(p)[0] == "g"}
 
 def page(pair):
     g, tags, text = info(pair)
+    d = D["".join(sorted(pair))]
     a, b = pair[0], pair[1]
     rev = b + a
     gname, gshort = GRADE[g]
     aspects = " ".join(TAG[t] for t in tags)
     title = f"ความหมายเลข {pair} เลข{gshort}ไหม เบอร์มงคล ทะเบียนรถ บ้านเลขที่"
-    desc = f"เลข {pair} {text} ({gname}) ดูความหมายคู่เลข {pair} สำหรับเบอร์โทร ทะเบียนรถ และบ้านเลขที่"
+    desc = f"ความหมายเลข {pair} ({gname}) {text} ด้านการงาน การเงิน ความรัก และเหมาะกับเบอร์โทร ทะเบียนรถ บ้านเลขที่ไหม"
     same = [p for p in GOOD if p != pair and set(info(p)[1]) & set(tags)][:8] if g == "g" and tags else GOOD[:8]
     body = [
         f'<p class="nav"><a href="../">🔮 ดวงใจ</a> · <a href="./">ความหมายเลขคู่</a> · <a href="../lucky-number">เช็กเบอร์มงคล</a></p>',
@@ -58,6 +61,12 @@ def page(pair):
         f'<p><b>ระดับ:</b> <span class="tag">{gname}</span>'
         + (f' <b>เด่นด้าน:</b> <span class="tag">{esc(aspects)}</span>' if aspects else "")
         + "</p></div>",
+        f'<div class="box"><h2>เลข {pair} ด้านการงาน การเงิน ความรัก</h2>',
+        f"<h3>💼 การงาน</h3><p>{esc(d['work'])}</p>",
+        f"<h3>💰 การเงิน</h3><p>{esc(d['money'])}</p>",
+        f"<h3>❤️ ความรัก</h3><p>{esc(d['love'])}</p>",
+        f"<h3>👤 เหมาะกับใคร</h3><p>{esc(d['fit'])}</p>",
+        f"<h3>⚠️ ข้อควรระวัง</h3><p>{esc(d['care'])}</p></div>",
         f'<div class="box"><h2>เลข {esc(a)} กับเลข {esc(b)} มาจากอะไร</h2>',
         f"<p>เลข {a} ตรงกับ{DIGIT[a][0]} หมายถึง{DIGIT[a][1]}</p>",
         (f"<p>เลข {b} ตรงกับ{DIGIT[b][0]} หมายถึง{DIGIT[b][1]}</p>" if b != a
@@ -69,6 +78,18 @@ def page(pair):
     if rev != pair:
         body.append(f'<p>เลข {pair} กับ <a href="{rev}">เลข {rev}</a> ใช้ความหมายเดียวกัน เพราะเป็นคู่เลขเดียวกันสลับตำแหน่ง</p>')
     body.append("</div>")
+    faq = [
+        (f"เลข {pair} ดีไหม", f"เลข {pair} จัดเป็น{gname}ตามศาสตร์เลขมงคลไทย หมายถึง{text}"),
+        (f"เลข {pair} เหมาะกับเบอร์โทรศัพท์ไหม", ADVICE[g]),
+        (f"เลข {pair} เหมาะกับใคร", d["fit"]),
+    ]
+    if rev != pair:
+        faq.append((f"เลข {pair} กับเลข {rev} ต่างกันไหม", f"ไม่ต่างกัน ตำราเลขศาสตร์ถือว่า {pair} และ {rev} เป็นคู่เลขเดียวกันสลับตำแหน่ง จึงใช้ความหมายเดียวกัน"))
+    body.append('<div class="box"><h2>คำถามที่พบบ่อย</h2>'
+                + "".join(f"<h3>{esc(q)}</h3><p>{esc(ans)}</p>" for q, ans in faq) + "</div>")
+    ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+        {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": ans}} for q, ans in faq]},
+        ensure_ascii=False).replace("</", "<\\/")
     body.append('<div class="box"><h2>เช็กเบอร์ของคุณทั้งเบอร์</h2>'
                 '<p>หนึ่งเบอร์มีหลายคู่เลข ความหมายรวมจึงสำคัญกว่าคู่เดียว ลองใช้เครื่องมือฟรีด้านล่างดูคะแนนรวมทั้งเบอร์</p>'
                 '<p><a class="tag" href="../lucky-number">เช็กเบอร์โทรศัพท์</a> <a class="tag" href="../lucky-plate">เช็กทะเบียนรถ</a> '
@@ -82,6 +103,7 @@ def page(pair):
             f'<meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)}</title>'
             f'<meta name="description" content="{esc(desc)}">'
             f'<link rel="canonical" href="https://duangjai.site/number/{pair}"><link rel="stylesheet" href="../style.css">'
+            f'<script type="application/ld+json">{ld}</script>'
             f'</head><body><div class="w">' + "\n".join(body) + "</div></body></html>")
 
 def index():
